@@ -35,7 +35,7 @@ public class Anagrams {
         }
     }
 
-    private static void permutation(String prefix, String str) {
+    private static void findAll(String prefix, String str) {
       int n = str.length();
       if (n == 0) {
           if(dictionary.contains(prefix)){
@@ -52,7 +52,5 @@ public class Anagrams {
     }
 
     private static void addWord(String word) {
-
     }
-
 }
