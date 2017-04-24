@@ -34,35 +34,46 @@ public class RecursiveSquare {
     }
   }
 
-  public static void main(String[] args){
+  public BufferedImage scaleToScreen(BufferedImage original) {
     Dimension screenSize = Toolkit.getDefaultToolkit().getScreenSize();
     double width = screenSize.getWidth();
     double height = screenSize.getHeight();
     int largerEdge = height < width ? (int) width : (int) height;
 
+    BufferedImage scaledImage = new BufferedImage(largerEdge, largerEdge, BufferedImage.TYPE_BYTE_INDEXED);
+    Graphics g = scaledImage.createGraphics();
+    g.drawImage(original, 0, 0, largerEdge, largerEdge, null);
+    g.dispose();
+
+    return scaledImage;
+  }
+
+  public void saveImage(BufferedImage image, String name) {
+    try {
+      File outputFile = new File(name);
+      ImageIO.write(image, "png", outputFile);
+      System.out.println("Saved your squares to " + name);
+    } catch (IOException e) {
+      System.out.println("Failed to save image");
+      System.exit(0);
+    }
+  }
+
+  public static void main(String[] args){
     int iterations = Integer.parseInt(args[0]);
     double size = (int) Math.pow(3, iterations + 1);
 
     BufferedImage output = new BufferedImage((int) size, (int) size, BufferedImage.TYPE_BYTE_INDEXED);
     Graphics2D g = output.createGraphics();
     g.setColor(Color.white);
-    System.out.println("Drawing squares...");
     g.fillRect(0, 0, (int)size, (int)size);
+
+    System.out.println("Drawing squares...");
+
     new RecursiveSquare(0, 0, 0, (int) size).subdivideAndFill(g, iterations);
+    
     g.dispose();
 
-    /* Scale image and write to file. */
-    try {
-      BufferedImage newImage = new BufferedImage(largerEdge, largerEdge, BufferedImage.TYPE_BYTE_INDEXED);
-      Graphics g2 = newImage.createGraphics();
-      g2.drawImage(output, 0, 0, largerEdge, largerEdge, null);
-      g2.dispose();
-      File outputFile = new File("fractal_squares_" + iterations + ".png");
-      ImageIO.write(newImage, "png", outputFile);
-      System.out.println("Saved your squares to fractal_squares_" + iterations + ".png");
-    } catch (IOException e) {
-        System.out.println("failed to save image");
-        System.exit(0);
-    }
+    saveImage(scaleToScreen(output), "fractal_squares_" + iterations + ".png");
   }
 }

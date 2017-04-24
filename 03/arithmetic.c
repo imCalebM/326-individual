@@ -4,7 +4,7 @@
  * Arithmetic
  *
  * @author Rhianne Price
- * March 2017
+ * April 2017
  **/
 #include <stdio.h>
 #include <stdlib.h>
