@@ -19,7 +19,7 @@
 void *emalloc(size_t s){
   void *result = malloc(s);
   if(NULL == result){
-    fprintf(stderr, "Memory allocation failed\n");
+    fprintf(stderr, "Memory allocation of failed\n");
     exit(EXIT_FAILURE);
   }
   return result;
@@ -69,12 +69,8 @@ int solve_normally(int *numbers, int size, int *operators, int total) {
   for(i = 0; i < size - 1; i++) {
     working[i + 1] = numbers[i + 1];
     if(operators[i] == TIMES) {
-      working[i + 1] = numbers[i + 1] * numbers[i];
+      working[i + 1] = numbers[i + 1] * working[i];
       working[i] = 0;
-      if(working[i + 1] > total){
-        free(working);
-        return 0;
-      }
     }
   }
   sum = working[0];
@@ -82,6 +78,7 @@ int solve_normally(int *numbers, int size, int *operators, int total) {
   for(i = 1; i < size; i++) {
       sum += working[i];
   }
+
   if(sum == total) {
     printf("N %d", first);
     for(j = 0; j < size - 1; j++){
@@ -134,8 +131,10 @@ int main() {
       }
       if(order == 'N') {
         solutions += solve_normally(numbers, size, operators, total);
+        if(solutions == 1) break;
       } else if (order == 'L'){
         solutions += solve_left_to_right(numbers, size, operators, total);
+        if(solutions == 1) break;
       }
     }
     if(solutions == 0) {
