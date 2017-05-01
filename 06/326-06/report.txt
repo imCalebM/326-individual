@@ -1,0 +1,16 @@
+Recursive:
++ Simple and intuitive approach to this particular problem, easy to understand
+  and implement.
++ Depth first approach using recursion stack, more space efficient than breadth
+  first, as only have to remember O(k) squares to process next.
+- Since each square hold references to 9 other squares, this is less space
+  efficient, O(3^k). Could be solved by garbage collector at after the square is
+  filled.
+
+Iterative:
++ Squares are not defined recursively, so references to sub squares are not held
+  by each square, the only references to squares held are the ones on the queue,
+  more space efficient.
+- Breadth first approach using queue means queue could get as big as O(3^k).
+  Could have explicitly used a stack instead of a queue to get this down to O(k).
+- Less intuitive.
