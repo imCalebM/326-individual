@@ -24,7 +24,7 @@ public class HarmoniousNumbers {
   /**
    * Finds the sum of all divisors of a given number except for 1 and itself.
    * @param candidate the number to find the sum of the divisors for.
-   * @return the sum of all divisors except 1 and itself.
+   * @return the sum of all divisors except 1 and the number.
    */
   private static int sumOfProperDivisors(int candidate){
       int maxDivisor = (int) Math.sqrt(candidate);
@@ -48,7 +48,7 @@ public class HarmoniousNumbers {
    */
   public static void main(String[] args) {
     for(int i = 2; i < MAX; i++) {
-      /* For a harmonious pair, sum of divisors(p1) = p2 and vice versa */
+      /* For a harmonious pair, use sum of divisors(p1) = p2 and vice versa */
       int pair1 = sumOfProperDivisors(i);
       int pair2 = sumOfProperDivisors(pair1);
 
